@@ -1,13 +1,13 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/layout :: head(text='Hello world')">
-        <title>Hello world</title>
+    <head th:replace="fragments/layout :: head(text='Dashboard')">
+        <title>Dashboard</title>
     </head>
     <body>
         <header th:replace="fragments/layout :: header">
             <p>menu</p>
         </header>
-
-        <h1 th:text="${message}">Hello world</h1>
+        
+        <h2 th:text="${name}">Welcome</h2>
     </body>
 </html>

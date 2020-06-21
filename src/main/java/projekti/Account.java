@@ -1,9 +1,11 @@
 package projekti;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,5 +32,10 @@ public class Account extends AbstractPersistable<Long> {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities;
+    
+    @OneToMany
+    private List<Account> connections = new ArrayList<>();
 
+    @OneToMany
+    private List<Account> connectionRequest = new ArrayList<>();
 }

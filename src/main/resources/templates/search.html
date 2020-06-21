@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head(text='Search Page')">
+        <title>Search Page</title>
+    </head>
+    <body>
+        <header th:replace="fragments/layout :: header">
+            <p>menu</p>
+        </header>
+        
+        <h3 th:text="${status}">status</h3>
+        
+        <div>Search by username</div>
+        
+        <form th:action="@{/search}" method="POST">
+            <table>
+                <tr>
+                    <td>Username:</td>
+                    <td><input type="text" name="searchword"/></td>
+                    <td><input type="submit" value="Send"/></td>
+                </tr>
+            </table>
+        </form>
+        
+        <ul>
+            <li th:each="account : ${accounts}">
+                <form th:action="@{/accounts/{accountId}(accountId=${account.id})}" th:method="POST">
+                    <span th:text="${account.firstNameLastName}">profilename</span>
+                    <input type="submit" value="Send Request"/>
+                </form>
+            </li>
+        </ul>
+        
+    </body>
+</html>
