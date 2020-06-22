@@ -139,4 +139,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         accountRepository.save(loggedInAcc);
         accountRepository.save(sender);
     }
+    
+    public void declineRequest(String accountProfilename) {
+        Account loggedInAcc = getLoggedAcc();
+        Account sender = getAccountByProfilename(accountProfilename);
+        
+        // Poistetaan requests listalta.
+        loggedInAcc.getConnectionRequest().remove(sender);
+        accountRepository.save(loggedInAcc);
+    }
 }

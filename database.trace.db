@@ -2283,3 +2283,12 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/tim
 	at org.h2.mvstore.FileStore.open(FileStore.java:173)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:350)
 	... 65 more
+2020-06-22 15:59:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ACCOUNT_CONNECTIONS[*] T"; expected "ALTER, ANALYZE, {"; SQL statement:
+ACCOUNT_CONNECTIONS T [42001-197]
+2020-06-22 15:59:34 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ACCOUNT_CONNECTIONS[*]"; expected "ALTER, ANALYZE, {"; SQL statement:
+ACCOUNT_CONNECTIONS [42001-197]
+2020-06-22 20:10:35 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DELETE *[*] FROM ROLE_HIERARCHY"; expected "identifier"; SQL statement:
+DELETE * FROM ROLE_HIERARCHY [42001-197]

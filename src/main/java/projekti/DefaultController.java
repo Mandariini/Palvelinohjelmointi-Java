@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -106,6 +107,12 @@ public class DefaultController {
     @PostMapping("/accounts/request/{accountProfilename}")
     public String acceptRequest(@PathVariable String accountProfilename) {
         cudservice.acceptRequest(accountProfilename);
+        return "redirect:/dashboard";
+    }
+    
+    @DeleteMapping("/accounts/request/{accountProfilename}")
+    public String declineRequest(@PathVariable String accountProfilename) {
+        cudservice.declineRequest(accountProfilename);
         return "redirect:/dashboard";
     }
 }

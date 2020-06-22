@@ -5,6 +5,10 @@ import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -33,9 +37,15 @@ public class Account extends AbstractPersistable<Long> {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities;
     
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name = "connections", 
+            joinColumns = { @JoinColumn(name = "target_id")}, 
+            inverseJoinColumns={@JoinColumn(name="sender_id")})
     private List<Account> connections = new ArrayList<>();
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name = "connectionRequest_hierarchy", 
+            joinColumns = { @JoinColumn(name = "target_id")}, 
+            inverseJoinColumns={@JoinColumn(name="sender_id")})
     private List<Account> connectionRequest = new ArrayList<>();
 }
