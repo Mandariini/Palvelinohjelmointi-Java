@@ -73,22 +73,70 @@ public class CustomUserDetailsService implements UserDetailsService {
         return name;
     }
     
-    public String sendReq(Long accountId, String username) {        
+    public Account getAccountByProfilename(String profileName) {
+        Account acc = accountRepository.findByProfilename(profileName);
+        return acc;
+    }
+    
+    public Long getLoggedInId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Long id = getLoggedAcc().getId();
+        return id;
+    }
+    
+    public Account getLoggedAcc() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Account acc = accountRepository.findByUsername(username);
+        return acc;
+    }
+    
+    public String sendReq(String accountProfilename, String username) {        
 
-        Account loggedInAcc = accountRepository.findByUsername(username);
-        List<Account> reqs = accountRepository.getOne(accountId).getConnectionRequest();
+        Account loggedInAcc = accountRepository.findByUsername(username);        
+        Account targetAcc = accountRepository.findByProfilename(accountProfilename);
         
-        if (Objects.equals(accountId, loggedInAcc.getId())) {
+        List<Account> yourReqs = loggedInAcc.getConnectionRequest();
+        List<Account> targetReqs = targetAcc.getConnectionRequest();
+        List<Account> yourConnections = loggedInAcc.getConnections();
+        
+        if (Objects.equals(targetAcc.getId(), loggedInAcc.getId())) {
             return "You can't add yourself.";
         }
         
-        if (reqs.contains(loggedInAcc)) {
+        if (yourReqs.contains(targetAcc)) {
+            return "This person has already sent you a request.";
+        }
+        
+        if (yourConnections.contains(targetAcc)) {
+            return "This person is already in your connections";
+        }
+        
+        if (targetReqs.contains(loggedInAcc)) {
             return "Request already sent.";
         }
-        reqs.add(loggedInAcc);
-        Account targetAcc = accountRepository.getOne(accountId);
-        targetAcc.setConnectionRequest(reqs);
+        targetReqs.add(loggedInAcc);
+        targetAcc.setConnectionRequest(targetReqs);
         accountRepository.save(targetAcc);
         return "Request sent.";
+    }
+    
+    public void acceptRequest(String accountProfilename) {
+        Account loggedInAcc = getLoggedAcc();
+        Account sender = getAccountByProfilename(accountProfilename);
+        
+        // Poistetaan requests listalta ja lisätään connectioneihin.
+        loggedInAcc.getConnectionRequest().remove(sender);
+        List<Account> connections = loggedInAcc.getConnections();
+        connections.add(sender);
+        loggedInAcc.setConnections(connections);
+        
+        // Lisätään myös lähettäjän connectioneihin.
+        List<Account> senderConnections = sender.getConnections();
+        senderConnections.add(loggedInAcc);
+        sender.setConnections(senderConnections);
+        
+        accountRepository.save(loggedInAcc);
+        accountRepository.save(sender);
     }
 }

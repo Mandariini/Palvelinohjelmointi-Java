@@ -9,5 +9,25 @@
         </header>
         
         <h2 th:text="${name}">Welcome</h2>
+        
+        <h3>Connection requests (<span th:text="${requests.size()}"></span>)</h3>
+        <ul>
+            <li th:each="request : ${requests}">
+                <a th:text="${request.firstNameLastName}" th:href="@{/accounts/{accountProfilename}(accountProfilename=${request.profilename})}">name</a>
+                <form th:action="@{/accounts/request/{accountProfilename}(accountProfilename=${request.profilename})}" th:method="POST">
+                    <input type="submit" value="Accept Request"/>
+                </form>
+                <form th:action="@{/accounts/request/{accountProfilename}(accountProfilename=${request.profilename})}" th:method="DELETE">
+                    <input type="submit" value="Decline Request"/>
+                </form>
+            </li>
+        </ul>
+        
+        <h3>Your connections (<span th:text="${connections.size()}"></span>)</h3>
+        <ul>
+            <li th:each="connection : ${connections}">
+                <a th:text="${connection.firstNameLastName}" th:href="@{/accounts/{accountProfilename}(accountProfilename=${connection.profilename})}">name</a>
+            </li>
+        </ul>
     </body>
 </html>

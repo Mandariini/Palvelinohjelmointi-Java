@@ -42,7 +42,10 @@ public class DefaultController {
     @GetMapping("/dashboard") 
     public String dashboard(Model model) {
         String name = cudservice.getLoggedInName();
+
         model.addAttribute("name", "Welcome " + name);
+        model.addAttribute("requests", cudservice.getLoggedAcc().getConnectionRequest());
+        model.addAttribute("connections", cudservice.getLoggedAcc().getConnections());
         return "dashboard";
     }
     
@@ -84,12 +87,25 @@ public class DefaultController {
         return "search";
     }
     
-    @PostMapping("/accounts/{accountId}")
-    public String sendRequest(@PathVariable Long accountId, Model model) {
+    @GetMapping("/accounts/{accountProfilename}")
+    public String getProfile(@PathVariable String accountProfilename, Model model) {
+        Account acc = cudservice.getAccountByProfilename(accountProfilename);
+        model.addAttribute("profileName", acc.getFirstNameLastName());
+        return "profile";
+    }
+    
+    @PostMapping("/accounts/{accountProfilename}")
+    public String sendRequest(@PathVariable String accountProfilename, Model model) {
         String username = cudservice.getLoggedInUsername();
         
-        String status = cudservice.sendReq(accountId, username);
+        String status = cudservice.sendReq(accountProfilename, username);
         model.addAttribute("status", status);
         return "search";
+    }
+    
+    @PostMapping("/accounts/request/{accountProfilename}")
+    public String acceptRequest(@PathVariable String accountProfilename) {
+        cudservice.acceptRequest(accountProfilename);
+        return "redirect:/dashboard";
     }
 }

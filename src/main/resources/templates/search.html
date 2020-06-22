@@ -22,14 +22,14 @@ and open the template in the editor.
                 <tr>
                     <td>Username:</td>
                     <td><input type="text" name="searchword"/></td>
-                    <td><input type="submit" value="Send"/></td>
+                    <td><input type="submit" value="Search"/></td>
                 </tr>
             </table>
         </form>
         
         <ul>
             <li th:each="account : ${accounts}">
-                <form th:action="@{/accounts/{accountId}(accountId=${account.id})}" th:method="POST">
+                <form th:action="@{/accounts/{accountProfilename}(accountProfilename=${account.profilename})}" th:method="POST">
                     <span th:text="${account.firstNameLastName}">profilename</span>
                     <input type="submit" value="Send Request"/>
                 </form>
