@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
+
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -52,9 +53,7 @@ public class Account extends AbstractPersistable<Long> {
             inverseJoinColumns={@JoinColumn(name="sender_id")})
     private List<Account> connectionRequest = new ArrayList<>();
     
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Type(type = "org.hibernate.type.PrimitiveByteArrayBlobType")
+    @Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
     private byte[] profilepicture;
     
     private String mediaType;
