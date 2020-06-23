@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,16 +52,18 @@ public class DefaultController {
         return "index";
     }
     
+    @Transactional
     @GetMapping("/dashboard") 
     public String dashboard(Model model) {
-        String name = cudservice.getLoggedInName();
-        String profilename = cudservice.getLoggedAcc().getProfilename();
+        Account acc = cudservice.getLoggedAcc();
+        String name = acc.getFirstNameLastName();
+        String profilename = acc.getProfilename();
         
         model.addAttribute("name", "Welcome " + name);
-        model.addAttribute("requests", cudservice.getLoggedAcc().getConnectionRequest());
-        model.addAttribute("connections", cudservice.getLoggedAcc().getConnections());
+        model.addAttribute("requests", acc.getConnectionRequest());
+        model.addAttribute("connections", acc.getConnections());
         model.addAttribute("profilename", profilename);
-        model.addAttribute("skills", cudservice.getLoggedAcc().getSkills());
+        model.addAttribute("skills", acc.getSkills());
         return "dashboard";
     }
     
