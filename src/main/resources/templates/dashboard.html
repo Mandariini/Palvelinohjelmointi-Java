@@ -10,6 +10,8 @@
         
         <h2 th:text="${name}">Welcome</h2>
         
+        <a th:href="@{/accounts/{accountProfilename}(accountProfilename=${profilename})}">Go to your profile.</a>
+        
         <h3>Connection requests (<span th:text="${requests.size()}"></span>)</h3>
         <ul>
             <li th:each="request : ${requests}">
@@ -27,6 +29,34 @@
         <ul>
             <li th:each="connection : ${connections}">
                 <a th:text="${connection.firstNameLastName}" th:href="@{/accounts/{accountProfilename}(accountProfilename=${connection.profilename})}">name</a>
+                <form th:action="@{/accounts/{accountProfilename}(accountProfilename=${connection.profilename})}" th:method="DELETE">
+                    <input type="submit" value="Disconnect"/>
+                </form>
+            </li>
+        </ul>
+        
+        <h4> Your profilepicture </h4>
+        <form th:action="@{/files}" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <input type="submit" value="Send!"/>
+        </form>
+        <img alt="" th:src="@{/accounts/{accountProfilename}/image (accountProfilename=${profilename})}" width="250" height="250" />
+        
+        <h5>Your Skills:</h5>
+        <form th:action="@{/skill}" method="POST">
+            <table>
+                <tr>
+                    <td>Add a new skill:</td>
+                    <td><input type="text" name="skilltext"/></td>
+                    <td><input type="submit" value="Add"/></td>
+                </tr>
+            </table>
+        </form>
+        <ul>
+            <li th:each="skill : ${skills}">
+                <div>
+                    <span th:text="${skill.text}">skill name</span> - <span th:text="${skill.voters.size()}">votes</span> praises
+                </div>
             </li>
         </ul>
     </body>

@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/layout :: head(text=${profileName})">
+    <head th:replace="fragments/layout :: head(text=${name})">
         <title>TODO supply a title</title>
     </head>
     <body>
-        <div>TODO write content</div>
+        <header th:replace="fragments/layout :: header">
+            <p>menu</p>
+        </header>
+        
+        <h2 th:text="${name}">name</h2>
+        <h3 th:text="${message}">Message</h3>
+        <img alt="" th:src="@{/accounts/{accountProfilename}/image (accountProfilename=${profilename})}" width="250" height="250" />
+    
+        <h3>My skills:</h3>
+        <ul>
+            <li th:each="skill : ${skills}">
+                <div>
+                    <span th:text="${skill.text}">skill name</span> - <span th:text="${skill.voters.size()}">votes</span> praises
+                    <form th:action="@{/accounts/{profilename}/praise/{id} (profilename=${skill.ownerAccount.getProfilename()},id=${skill.id})}" th:method="POST">
+                        <input type="submit" value="Give praise!"/>
+                    </form>
+                </div>
+            </li>
+        </ul>
     </body>
 </html>

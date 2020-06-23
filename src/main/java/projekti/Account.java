@@ -2,11 +2,13 @@ package projekti;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -44,8 +46,19 @@ public class Account extends AbstractPersistable<Long> {
     private List<Account> connections = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable(name = "connectionRequest_hierarchy", 
+    @JoinTable(name = "connectionRequests", 
             joinColumns = { @JoinColumn(name = "target_id")}, 
             inverseJoinColumns={@JoinColumn(name="sender_id")})
     private List<Account> connectionRequest = new ArrayList<>();
+    
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] profilepicture;
+    
+    private String mediaType;
+    
+    @OneToMany(mappedBy = "ownerAccount")
+    private List<Skill> skills = new ArrayList<>();
+    
+
 }

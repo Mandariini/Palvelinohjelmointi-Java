@@ -20,6 +20,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     private AccountRepository accountRepository;
     
     @Autowired
+    private SkillRepository skillRepository;
+    
+    @Autowired
     private PasswordEncoder passwordEncoder;
     
     @Override
@@ -75,6 +78,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     
     public Account getAccountByProfilename(String profileName) {
         Account acc = accountRepository.findByProfilename(profileName);
+        return acc;
+    }
+    
+    public Account getAccountById(Long id) {
+        Account acc = accountRepository.getOne(id);
         return acc;
     }
     
@@ -147,5 +155,26 @@ public class CustomUserDetailsService implements UserDetailsService {
         // Poistetaan requests listalta.
         loggedInAcc.getConnectionRequest().remove(sender);
         accountRepository.save(loggedInAcc);
+    }
+    
+    public void deleteConnection(String accountProfilename) {
+        Account loggedInAcc = getLoggedAcc();
+        Account connection = getAccountByProfilename(accountProfilename);
+        
+        loggedInAcc.getConnections().remove(connection);
+        connection.getConnections().remove(loggedInAcc);
+        
+        accountRepository.save(loggedInAcc);
+        accountRepository.save(connection);
+    }
+    
+    public void addSkill(String text) {
+        Account acc = getLoggedAcc();
+        Skill newSkill = new Skill(text, acc, new ArrayList<>());
+        List<Skill> skills = acc.getSkills();
+        skills.add(newSkill);
+        
+        skillRepository.save(newSkill);
+        accountRepository.save(acc);
     }
 }
