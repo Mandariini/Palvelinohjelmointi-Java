@@ -54,7 +54,7 @@ public class Account extends AbstractPersistable<Long> {
     
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Type(type = "org.hibernate.type.BinaryType")
+    @Type(type = "org.hibernate.type.PrimitiveByteArrayBlobType")
     private byte[] profilepicture;
     
     private String mediaType;
