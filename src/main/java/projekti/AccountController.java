@@ -74,7 +74,7 @@ public class AccountController {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("sizeOfVoters").descending());
 
         List<Skill> skills = skillService.getByOwnerAccSorted(acc, pageable);
-        
+
         model.addAttribute("name", acc.getFirstNameLastName());
         model.addAttribute("profilename", acc.getProfilename());
         model.addAttribute("skills", skills);

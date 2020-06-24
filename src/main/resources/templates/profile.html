@@ -15,10 +15,20 @@
     
         <h3>My skills:</h3>
         <ul>
-            <li th:each="skill : ${skills}">
+            <li th:each="skill, iter : ${skills}">
                 <div>
-                    <span th:text="${skill.text}">skill name</span> - <span th:text="${skill.voters.size()}">votes</span> praises
                     <form th:action="@{/accounts/{profilename}/praise/{id} (profilename=${skill.ownerAccount.getProfilename()},id=${skill.id})}" th:method="POST">
+                        <span th:if="${iter.index} == 0 or ${iter.index} == 1 or ${iter.index} == 2">
+                            <mark>
+                                <span th:text="${skill.text}">skill name</span> - <span th:text="${skill.voters.size()}">votes</span> praises
+                            </mark>
+                        </span>
+
+                        <span th:if="${iter.index} != 0 and ${iter.index} != 1 and ${iter.index} != 2">
+                            <span th:text="${skill.text}">skill name</span> - <span th:text="${skill.voters.size()}">votes</span> praises
+                        </span>
+
+
                         <input type="submit" value="Give praise!"/>
                     </form>
                 </div>
