@@ -51,9 +51,9 @@ public class Account extends AbstractPersistable<Long> {
             inverseJoinColumns={@JoinColumn(name="sender_id")})
     private List<Account> connectionRequest = new ArrayList<>();
     
-    //@Lob
-    //@Basic(fetch = FetchType.LAZY)
-    @Type(type = "org.hibernate.type.BinaryType")
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    //@Type(type = "org.hibernate.type.BinaryType")
     private byte[] profilepicture;
     
     private String mediaType;
