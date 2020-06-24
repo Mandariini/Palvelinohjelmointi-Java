@@ -1,7 +1,16 @@
 package projekti;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,12 +52,12 @@ public class DefaultController {
         return "form";
     }
     
-    @GetMapping("success")
+    @GetMapping("/success")
     public String getSuccess() {
         return "success";
     }
     
-    @GetMapping("search")
+    @GetMapping("/search")
     public String getSearch() {
         return "search";
     }

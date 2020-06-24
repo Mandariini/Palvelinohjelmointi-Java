@@ -71,7 +71,7 @@ public class AccountController {
     public String getProfile(@PathVariable String accountProfilename, Model model) {
         Account acc = cudservice.getAccountByProfilename(accountProfilename);
         
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("sizeOfVoters").descending());
+        Pageable pageable = PageRequest.of(0, Integer.MAX_VALUE, Sort.by("sizeOfVoters").descending());
 
         List<Skill> skills = skillService.getByOwnerAccSorted(acc, pageable);
 
