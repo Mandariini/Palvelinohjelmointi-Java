@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -31,4 +32,7 @@ public class Skill extends AbstractPersistable<Long>{
             joinColumns = { @JoinColumn(name = "voterId")}, 
             inverseJoinColumns={@JoinColumn(name="skillId")})
     private List<Account> voters = new ArrayList<>();
+    
+    // Pageable:a varten...
+    private int sizeOfVoters;
 }

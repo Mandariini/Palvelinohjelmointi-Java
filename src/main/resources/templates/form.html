@@ -9,7 +9,8 @@
             <p>menu</p>
         </header>
         
-        <div>Registration Page</div>
+        <h2>Registration Page</h2>
+        <h3 th:text="${errormessage}"></h3>
         
         <form action="#" th:action="@{/registration}" th:object="${account}" method="POST">
             <table>
@@ -17,23 +18,25 @@
                     <td>Profile name: </td>
                     <td><input type="text" th:field="*{profilename}" /></td>
                     <td th:if="${#fields.hasErrors('profilename')}" th:errors="*{profilename}">Profile Errormessage</td>
-                    <td>Used on your page URL</td>
+                    <td>Used on your page URL | Between 4 and 15 characters</td>
                 </tr>
                 <tr>
                     <td>First name and last name: </td>
                     <td><input type="text" th:field="*{firstNameLastName}" /></td>
                     <td th:if="${#fields.hasErrors('firstNameLastName')}" th:errors="*{firstNameLastName}">Profile Errormessage</td>
+                    <td>Needs to be more than 4 characters</td>
                 </tr>
                 <tr>
                     <td>Username: </td>
                     <td><input type="text" th:field="*{username}" /></td>
                     <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Errormessage</td>
-                    <td>Used to login.</td>
+                    <td>Used to login | Between 14 and 15 characters</td>
                 </tr>
                 <tr>
                     <td>Password: </td>
                     <td><input type="password" th:field="*{password}" /></td>
                     <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Errormessage</td>
+                    <td>Needs to be more than 4 characters</td>
                 </tr>
                 <tr>
                     <td><button type="submit">Submit</button></td>

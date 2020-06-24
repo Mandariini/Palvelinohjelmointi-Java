@@ -1,5 +1,6 @@
 package projekti;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -68,28 +70,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         return username;
     }
     
-    public String getLoggedInName() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        if (username == "anonymousUser") { return "notLoggedIn"; }
-        String name = accountRepository.findByUsername(username).getFirstNameLastName();
-        return name;
-    }
-    
     public Account getAccountByProfilename(String profileName) {
         Account acc = accountRepository.findByProfilename(profileName);
         return acc;
-    }
-    
-    public Account getAccountById(Long id) {
-        Account acc = accountRepository.getOne(id);
-        return acc;
-    }
-    
-    public Long getLoggedInId() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Long id = getLoggedAcc().getId();
-        return id;
     }
     
     public Account getLoggedAcc() {
@@ -108,6 +91,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<Account> targetReqs = targetAcc.getConnectionRequest();
         List<Account> yourConnections = loggedInAcc.getConnections();
         
+        // Tarkistukset voiko pyyntoa lahettaa.
         if (Objects.equals(targetAcc.getId(), loggedInAcc.getId())) {
             return "You can't add yourself.";
         }
@@ -168,13 +152,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         accountRepository.save(connection);
     }
     
-    public void addSkill(String text) {
+    public void createProfilePic(MultipartFile file) throws IOException {
         Account acc = getLoggedAcc();
-        Skill newSkill = new Skill(text, acc, new ArrayList<>());
-        List<Skill> skills = acc.getSkills();
-        skills.add(newSkill);
-        
-        skillRepository.save(newSkill);
+        acc.setProfilepicture(file.getBytes());
+        acc.setMediaType(file.getContentType());
         accountRepository.save(acc);
     }
 }

@@ -30,7 +30,7 @@ and open the template in the editor.
         <ul>
             <li th:each="account : ${accounts}">
                 <form th:action="@{/accounts/{accountProfilename}(accountProfilename=${account.profilename})}" th:method="POST">
-                    <span th:text="${account.firstNameLastName}">profilename</span>
+                    <a th:text="${account.firstNameLastName}" th:href="@{/accounts/{accountProfilename}(accountProfilename=${account.profilename})}">name</a>
                     <input type="submit" value="Send Request"/>
                 </form>
             </li>
