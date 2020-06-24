@@ -4,42 +4,42 @@
     <head th:replace="fragments/layout :: head(text='Registration Page')">
         <title>Registration Page</title>
     </head>
-    <body>
+    <body class="container">
         <header th:replace="fragments/layout :: header">
             <p>menu</p>
         </header>
         
-        <h2>Registration Page</h2>
-        <h3 th:text="${errormessage}"></h3>
+        <h2 class="container">Registration Page</h2>
+        <h3 th:text="${errormessage}" class="container"></h3>
         
         <form action="#" th:action="@{/registration}" th:object="${account}" method="POST">
-            <table>
+            <table class="container">
                 <tr>
                     <td>Profile name: </td>
-                    <td><input type="text" th:field="*{profilename}" /></td>
+                    <td><input type="text" th:field="*{profilename}" class="form-control"/></td>
                     <td th:if="${#fields.hasErrors('profilename')}" th:errors="*{profilename}">Profile Errormessage</td>
                     <td>Used on your page URL | Between 4 and 15 characters</td>
                 </tr>
                 <tr>
                     <td>First name and last name: </td>
-                    <td><input type="text" th:field="*{firstNameLastName}" /></td>
+                    <td><input type="text" th:field="*{firstNameLastName}" class="form-control" /></td>
                     <td th:if="${#fields.hasErrors('firstNameLastName')}" th:errors="*{firstNameLastName}">Profile Errormessage</td>
                     <td>Needs to be more than 4 characters</td>
                 </tr>
                 <tr>
                     <td>Username: </td>
-                    <td><input type="text" th:field="*{username}" /></td>
+                    <td><input type="text" th:field="*{username}" class="form-control"/></td>
                     <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Errormessage</td>
                     <td>Used to login | Between 14 and 15 characters</td>
                 </tr>
                 <tr>
                     <td>Password: </td>
-                    <td><input type="password" th:field="*{password}" /></td>
+                    <td><input type="password" th:field="*{password}" class="form-control"/></td>
                     <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Errormessage</td>
                     <td>Needs to be more than 4 characters</td>
                 </tr>
                 <tr>
-                    <td><button type="submit">Submit</button></td>
+                    <td><button type="submit" class="btn btn-primary">Submit</button></td>
                 </tr>
             </table>
         </form>

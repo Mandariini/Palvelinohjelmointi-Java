@@ -4,18 +4,18 @@
     <head th:replace="fragments/layout :: head(text=${name})">
         <title>TODO supply a title</title>
     </head>
-    <body>
+    <body class="container">
         <header th:replace="fragments/layout :: header">
             <p>menu</p>
         </header>
         
-        <h2 th:text="${name}">name</h2>
+        <h2 th:text="${name}" class="text-center">name</h2>
         <h3 th:text="${message}">Message</h3>
         <img alt="" th:src="@{/accounts/{accountProfilename}/image (accountProfilename=${profilename})}" width="250" height="250" />
     
         <h3>My skills:</h3>
-        <ul>
-            <li th:each="skill, iter : ${skills}">
+        <ul class="list-group container">
+            <li th:each="skill, iter : ${skills}" class="list-group-item">
                 <div>
                     <form th:action="@{/accounts/{profilename}/praise/{id} (profilename=${skill.ownerAccount.getProfilename()},id=${skill.id})}" th:method="POST">
                         <span th:if="${iter.index} == 0 or ${iter.index} == 1 or ${iter.index} == 2">
@@ -29,7 +29,7 @@
                         </span>
 
 
-                        <input type="submit" value="Give praise!"/>
+                        <input type="submit" value="Give praise!" class="btn btn-primary"/>
                     </form>
                 </div>
             </li>
