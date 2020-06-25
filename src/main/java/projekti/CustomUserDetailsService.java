@@ -49,7 +49,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         authorities);
     }
     
-    public void create(Account account) {
+    public String create(Account account) {
+        if (accountRepository.findByUsername(account.getUsername()) != null || accountRepository.findByProfilename(account.getProfilename()) != null) {
+            return "Username or profilename is already in use.";
+        }
+        
         ArrayList<String> authorities = new ArrayList<String>();
         authorities.add("USER");
         account.setAuthorities(authorities);
@@ -57,6 +61,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         account.setPassword(passwordEncoder.encode(password));
         
         accountRepository.save(account);
+        return "Registration succesfull.";
     }
     
     public List<Account> search(String word) {

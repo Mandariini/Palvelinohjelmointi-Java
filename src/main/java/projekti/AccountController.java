@@ -63,8 +63,9 @@ public class AccountController {
             return "redirect:/registration";
         }
         
-        cudservice.create(account);
-        return "redirect:/success";
+        String text = cudservice.create(account);
+        redirectAttributes.addFlashAttribute("errormessage", text);
+        return "redirect:/registration";
     }
     
     @GetMapping(path="/accounts/{accountProfilename}")
