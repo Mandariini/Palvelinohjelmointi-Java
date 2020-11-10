@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head(text=${name})">
+        <title>TODO supply a title</title>
+    </head>
+    <body class="container">
+        <header th:replace="fragments/layout :: header">
+            <p>menu</p>
+        </header>
+        
+        <h2 th:text="${name}" class="text-center">name</h2>
+        <h3 th:text="${message}">Message</h3>
+        <img alt="" th:src="@{/accounts/{accountProfilename}/image (accountProfilename=${profilename})}" width="250" height="250" />
+    
+        <h3>My skills:</h3>
+        <ul class="list-group container">
+            <li th:each="skill, iter : ${skills}" class="list-group-item">
+                <div>
+                    <form th:action="@{/accounts/{profilename}/praise/{id} (profilename=${skill.ownerAccount.getProfilename()},id=${skill.id})}" th:method="POST">
+                        <span th:if="${iter.index} == 0 or ${iter.index} == 1 or ${iter.index} == 2">
+                            <mark>
+                                <span th:text="${skill.text}">skill name</span> - <span th:text="${skill.voters.size()}">votes</span> praises
+                            </mark>
+                        </span>
+
+                        <span th:if="${iter.index} != 0 and ${iter.index} != 1 and ${iter.index} != 2">
+                            <span th:text="${skill.text}">skill name</span> - <span th:text="${skill.voters.size()}">votes</span> praises
+                        </span>
+
+
+                        <input type="submit" value="Give praise!" class="btn btn-primary"/>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </body>
+</html>

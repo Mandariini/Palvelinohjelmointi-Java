@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head(text='Search Page')">
+        <title>Search Page</title>
+    </head>
+    <body class="container">
+        <header th:replace="fragments/layout :: header">
+            <p>menu</p>
+        </header>
+        
+        <h3 th:text="${status}" class="container">status</h3>
+        
+        <h2 class="container">Search by name</h2>
+        
+        <form th:action="@{/search}" method="POST">
+            <table class="container">
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" name="searchword" class="form-control"/></td>
+                    <td><input type="submit" value="Search" class="btn btn-primary"/></td>
+                </tr>
+            </table>
+        </form>
+        
+        <ul class="list-group col-sm-6 col-sm-offset-3 container">
+            <li th:each="account : ${accounts}" class="list-group-item">
+                <form th:action="@{/accounts/{accountProfilename}(accountProfilename=${account.profilename})}" th:method="POST">
+                    <a class="list-group-item list-group-item-action" th:text="${account.firstNameLastName}" th:href="@{/accounts/{accountProfilename}(accountProfilename=${account.profilename})}">name</a>
+                    <input type="submit" value="Send Request" class="btn btn-secondary btn-sm"/>
+                </form>
+            </li>
+        </ul>
+        
+    </body>
+</html>
